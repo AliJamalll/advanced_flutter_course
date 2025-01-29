@@ -1,21 +1,123 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project_omar/core/helpers/spacing.dart';
+import 'package:flutter_project_omar/core/theming/colors.dart';
+import 'package:flutter_project_omar/core/theming/style.dart';
+import 'package:flutter_project_omar/core/widgets/app_text_button.dart';
+import 'package:flutter_project_omar/core/widgets/app_text_form_field.dart';
+import 'package:flutter_project_omar/features/login/ui/login_screen.dart';
+import 'package:flutter_project_omar/features/login/ui/widgets/already_have_an_account.dart';
+import 'package:flutter_project_omar/features/login/ui/widgets/custom_terms_and_conditions.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final formKey = GlobalKey<FormState>();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _passwordController.dispose();
+    _emailController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('LoginScreen'),
-        elevation: 0,
-        backgroundColor: Colors.white,
-      ),
-      body: Center(
-        child: Text(
-          'help'
+        body: SafeArea(
+            child: Padding(
+      padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 30.h),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Welcome Back",
+              style: TextStyles.font24BlueBold
+                  .copyWith(color: ColorsManager.mainBlue
+              ),
+            ),
+            verticalSpace(8),
+            Text("We're excited to have you back, can't wait to\nsee what you've been up to since you last\nlogged in.",
+              style: TextStyles.font14GrayRegular
+                  .copyWith(color: ColorsManager.gray
+              ),
+            ),
+            verticalSpace(36),
+            Form(
+                key: formKey,
+                child:
+            Column(
+              children: [
+                AppTextFormField(
+                  text: "Email",
+                  controller: _emailController,
+                  type: TextInputType.emailAddress,
+                  //isSecure: false,
+                ),
+                verticalSpace(18),
+                AppTextFormField(
+                  isSecure: true,
+                  text: "Password",
+                  controller: _passwordController,
+                  type: TextInputType.number,
+                ),
+                verticalSpace(24),
+                Align(
+                    alignment: Alignment.centerRight,
+                    child: Text("Forgot Password?",
+                    style: TextStyles.font13BlueRegular,
+                    )
+                ),
+                verticalSpace(40),
+                AppTextButton(
+                  text: "Login",
+                  onPressed: (){},
+                ),
+                verticalSpace(46),
+                Row(
+                  spacing: 16,
+                  children: [
+                    Expanded(child: Divider(color: ColorsManager.lighterGray,thickness: 2,)),
+                    Text("Or sign in with",
+                    style: TextStyles.font14GrayRegular,
+                    ),
+                    Expanded(child: Divider(color: ColorsManager.lighterGray,thickness: 2,)),
+
+                  ],
+                ),
+                verticalSpace(32),
+                Row(
+                  children: [
+                    Expanded(child: Image.asset("assets/images/Login alternative.png",width: 50.w,height: 50.h,)),
+                    horizontalSpace(10),
+                    Expanded(child: Image.asset("assets/images/fac.png",width: 50.w,height: 50.h,)),
+                    horizontalSpace(10),
+                    Expanded(child: Image.asset("assets/images/ios.png",width: 50.w,height: 50.h,)),
+
+                  ],
+                ),
+                verticalSpace(32),
+                CustomTermsAndConditions(),
+                verticalSpace(24),
+                AlreadyHaveAnAccount()
+              ],
+            )
+            )
+          ],
         ),
       ),
+    ),
+        ),
     );
   }
 }
+
