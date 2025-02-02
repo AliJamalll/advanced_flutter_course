@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_project_omar/core/helpers/spacing.dart';
 import 'package:flutter_project_omar/core/theming/colors.dart';
 import 'package:flutter_project_omar/core/theming/style.dart';
 import 'package:flutter_project_omar/core/widgets/app_text_button.dart';
 import 'package:flutter_project_omar/core/widgets/app_text_form_field.dart';
+import 'package:flutter_project_omar/features/login/data/models/login_request_body.dart';
+import 'package:flutter_project_omar/features/login/logic/login_cubit.dart';
+import 'package:flutter_project_omar/features/login/logic/login_state.dart';
 import 'package:flutter_project_omar/features/login/ui/login_screen.dart';
 import 'package:flutter_project_omar/features/login/ui/widgets/already_have_an_account.dart';
 import 'package:flutter_project_omar/features/login/ui/widgets/custom_terms_and_conditions.dart';
+import 'package:flutter_project_omar/features/login/ui/widgets/email_and_password.dart';
+import 'package:flutter_project_omar/features/login/ui/widgets/login_bloc_lisnter.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -17,7 +23,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final formKey = GlobalKey<FormState>();
+  //final formKey = GlobalKey<FormState>();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
@@ -52,24 +58,9 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             verticalSpace(36),
-            Form(
-                key: formKey,
-                child:
             Column(
               children: [
-                AppTextFormField(
-                  text: "Email",
-                  controller: _emailController,
-                  type: TextInputType.emailAddress,
-                  //isSecure: false,
-                ),
-                verticalSpace(18),
-                AppTextFormField(
-                  isSecure: true,
-                  text: "Password",
-                  controller: _passwordController,
-                  type: TextInputType.number,
-                ),
+                const EmailAndPassword(),
                 verticalSpace(24),
                 Align(
                     alignment: Alignment.centerRight,
@@ -80,7 +71,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 verticalSpace(40),
                 AppTextButton(
                   text: "Login",
-                  onPressed: (){},
+                  onPressed: (){
+                    validateThenLogin(context);
+                  },
                 ),
                 verticalSpace(46),
                 Row(
@@ -108,9 +101,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 verticalSpace(32),
                 CustomTermsAndConditions(),
                 verticalSpace(24),
-                AlreadyHaveAnAccount()
+                AlreadyHaveAnAccount(),
+                LoginBlocLisnter(),
               ],
-            )
             )
           ],
         ),
@@ -118,6 +111,15 @@ class _LoginScreenState extends State<LoginScreen> {
     ),
         ),
     );
+  }
+
+  void validateThenLogin(BuildContext context) {
+    if(context.read<LoginCubit>().formKey.currentState!.validate()){
+      context.read<LoginCubit>().emitLoginStates(LoginRequestBody(
+        email: context.read<LoginCubit>().emailController.text,
+        password: context.read<LoginCubit>().passwordController.text
+      ));
+    }
   }
 }
 

@@ -57,6 +57,14 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
           borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide(color: ColorsManager.lightGray, width: 1.3),
         ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: Colors.red, width: 1.3),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: Colors.red, width: 1.3),
+        ),
         hintText: widget.text,
         hintStyle: TextStyles.font14LightGrayRegular,
         suffixIcon: widget.isSecure
@@ -67,7 +75,7 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
                   });
                 },
                 icon: Icon(
-                  isPasswordVisible ? Icons.visibility_off : Icons.visibility,
+                  isPasswordVisible ? Icons.visibility : Icons.visibility_off,
                   color: ColorsManager.mainBlue,
                 ),
               )
