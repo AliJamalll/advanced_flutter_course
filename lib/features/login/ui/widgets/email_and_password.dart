@@ -14,7 +14,7 @@ class EmailAndPassword extends StatefulWidget {
 }
 
 class _EmailAndPasswordState extends State<EmailAndPassword> {
-  bool isSecures = true;
+   bool isSecures = true;
    bool hasLowerCase = false;
    bool hasUpperCase = false;
    bool hasSpecialChar = false;
@@ -43,6 +43,13 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
       });
     });
   }
+
+   @override
+   void dispose() {
+     // TODO: implement dispose
+     super.dispose();
+     passwordController.dispose();
+   }
 
   @override
   Widget build(BuildContext context) {
@@ -87,10 +94,4 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
         ));
   }
 
-@override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    passwordController.dispose();
-  }
 }

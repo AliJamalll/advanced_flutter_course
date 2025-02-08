@@ -32,7 +32,7 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => Scaffold(
             body: Center(
-              child: Text('No routes defiend for ${settings.name}'),
+              child: Text('No routes defined for ${settings.name}'),
             ),
           ), // Default route (or error page)
         );

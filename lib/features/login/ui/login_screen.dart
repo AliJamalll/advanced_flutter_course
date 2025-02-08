@@ -4,11 +4,8 @@ import 'package:flutter_project_omar/core/helpers/spacing.dart';
 import 'package:flutter_project_omar/core/theming/colors.dart';
 import 'package:flutter_project_omar/core/theming/style.dart';
 import 'package:flutter_project_omar/core/widgets/app_text_button.dart';
-import 'package:flutter_project_omar/core/widgets/app_text_form_field.dart';
 import 'package:flutter_project_omar/features/login/data/models/login_request_body.dart';
 import 'package:flutter_project_omar/features/login/logic/login_cubit.dart';
-import 'package:flutter_project_omar/features/login/logic/login_state.dart';
-import 'package:flutter_project_omar/features/login/ui/login_screen.dart';
 import 'package:flutter_project_omar/features/login/ui/widgets/already_have_an_account.dart';
 import 'package:flutter_project_omar/features/login/ui/widgets/custom_terms_and_conditions.dart';
 import 'package:flutter_project_omar/features/login/ui/widgets/email_and_password.dart';
@@ -23,17 +20,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  //final formKey = GlobalKey<FormState>();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
 
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    _passwordController.dispose();
-    _emailController.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 CustomTermsAndConditions(),
                 verticalSpace(24),
                 AlreadyHaveAnAccount(),
-                LoginBlocLisnter(),
+                LoginBlocListener(),
               ],
             )
           ],
